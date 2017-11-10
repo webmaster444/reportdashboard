@@ -2,6 +2,9 @@ $(function() {
 
         var donutData = genData();
 
+        d3.json('assets/jsondata.json',function(data){
+            parseData(data);
+        })
         console.log(donutData);
         var donuts = new DonutCharts();
         donuts.create(donutData);
@@ -298,4 +301,8 @@ $(function() {
             });
         }
         return dataset;
+    }
+
+    function parseData(data){
+        console.log(data);
     }
