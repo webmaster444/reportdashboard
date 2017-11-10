@@ -1,0 +1,9 @@
+body {
+    font-size: 100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    width: 960px;
+}
+
+#flow_execution_chart{
+	width: 40%;
+}
