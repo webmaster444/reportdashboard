@@ -45,8 +45,7 @@
         var createCenter = function(pie) {
 
             var eventObj = {
-                'mouseover': function(d, i) {
-                    console.log('here');
+                'mouseover': function(d, i) {                    
                     d3.select(this)
                         .transition()
                         .attr("r", chart_r * 0.65);

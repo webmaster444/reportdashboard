@@ -64,7 +64,7 @@ data.forEach(function(d) {
       .style("text-anchor", "end")
       .text('');
 
-  svg.selectAll("bar")
+  var bars = svg.selectAll("bar")
       .data(data)
     .enter().append("rect")
       .style("fill", "steelblue")
@@ -78,6 +78,7 @@ data.forEach(function(d) {
       .attr("height", function(d) { return height - y(d.value); })
       .attr("y", function(d) {return y(d.value); });
 
-      // .on('mouseover', tip.show)
-      // .on('mouseout', tip.hide);
+    svg.selectAll(".bar").data(data)
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
 }
