@@ -1,7 +1,7 @@
 function drawBarchart(wrapper, data){
-var margin = {top: 20, right: 20, bottom: 70, left: 40},
+var margin = {top: 50, right: 20, bottom: 110, left: 40},
     width = 600 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 
 // Parse the date / time
 var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
@@ -11,7 +11,7 @@ var y = d3.scale.linear().range([height, 0]);
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom")
-    .tickFormat(d3.time.format("%Y-%m"));
+    .ticks(5);
 
 var yAxis = d3.svg.axis()
     .scale(y)
@@ -19,16 +19,18 @@ var yAxis = d3.svg.axis()
     .ticks(10);
 
 var svg = d3.select(wrapper).append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", '100%')
+    .attr("height", '100%')
+    .attr('viewBox', function(){
+      return '0 0 '+parseInt(width + margin.left + margin.right) + ' ' + parseInt(height + margin.top + margin.bottom);})
   .append("g")
     .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
 
-    data.forEach(function(d) {
-        d.date = parseDate(d.date);
-        d.value = +d.value;
-    });
+data.forEach(function(d) {
+  d.date = d.key;
+  d.value = +d.value;
+});
 	
   x.domain(data.map(function(d) { return d.date; }));
   y.domain([0, d3.max(data, function(d) { return d.value; })]);
@@ -51,7 +53,7 @@ var svg = d3.select(wrapper).append("svg")
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Value ($)");
+      .text('');
 
   svg.selectAll("bar")
       .data(data)
@@ -59,6 +61,6 @@ var svg = d3.select(wrapper).append("svg")
       .style("fill", "steelblue")
       .attr("x", function(d) { return x(d.date); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.value); })
+      .attr("y", function(d) { console.log(d.value); return y(d.value); })
       .attr("height", function(d) { return height - y(d.value); });
 }
