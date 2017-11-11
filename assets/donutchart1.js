@@ -21,6 +21,7 @@ var pie = d3.layout.pie()
     .sort(null)
 	 .startAngle(1.1*Math.PI)
     .endAngle(3.1*Math.PI)
+    .padAngle(.02)
     .value(function(d) { return d.total; });
 
 var svg = d3.select(chartWrapper).append("svg")
