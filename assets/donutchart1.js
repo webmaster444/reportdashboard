@@ -33,6 +33,14 @@ var svg = d3.select(chartWrapper).append("svg")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {    
+    return "<strong>"+d.data.name+": "+"</strong> <span style='color:red'>" + d.total + "</span>";
+  })
+
+svg.call(tip);
 
  var g = svg.selectAll(".arc")
       .data(pie(dataset))
@@ -50,6 +58,9 @@ var svg = d3.select(chartWrapper).append("svg")
 			return arc(d)
 			}
 		}); 
+
+  svg.selectAll('.arc').on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
   // g.append("text")
   //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
   //     .attr("dy", ".35em")
