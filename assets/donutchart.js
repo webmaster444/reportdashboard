@@ -44,6 +44,7 @@
 
             var eventObj = {
                 'mouseover': function(d, i) {
+                    console.log('here');
                     d3.select(this)
                         .transition()
                         .attr("r", chart_r * 0.65);
@@ -96,12 +97,12 @@
                 return d.data.val;
             });
 
-            thisDonut.select('.value')
+            thisDonut.selectAll('.value')
                 .text(function(d) {
-                    return (sum)? sum.toFixed(1) + d.unit
-                                : d.total.toFixed(1) + d.unit;
+                    return (sum)? sum.toFixed(0) + d.unit
+                                : d.total.toFixed(0) + d.unit;
                 });
-            thisDonut.select('.percentage')
+            thisDonut.selectAll('.percentage')
                 .text(function(d) {
                     return (sum)? (sum/d.total*100).toFixed(2) + '%'
                                 : '';
@@ -111,7 +112,7 @@
         var resetAllCenterText = function() {
             charts.selectAll('.value')
                 .text(function(d) {
-                    return d.total.toFixed(1) + d.unit;
+                    return d.total.toFixed(0) + d.unit;
                 });
             charts.selectAll('.percentage')
                 .text('');
@@ -143,14 +144,13 @@
 
             var eventObj = {
 
-                'mouseover': function(d, i, j) {
-                    pathAnim(d3.select(this), 1);
-
-                    var thisDonut = charts.select('.type' + j);
-                    thisDonut.select('.value').text(function(donut_d) {
-                        return d.data.val.toFixed(1) + donut_d.unit;
+                'mouseover': function(d, i, j) {                    
+                    pathAnim(d3.select(this), 1);                    
+                    var thisDonut = charts.select('.type' + j);                    
+                    thisDonut.selectAll('.value').text(function(donut_d) {                        
+                        return d.data.val.toFixed(0) + donut_d.unit;
                     });
-                    thisDonut.select('.percentage').text(function(donut_d) {
+                    thisDonut.selectAll('.percentage').text(function(donut_d) {
                         return (d.data.val/donut_d.total*100).toFixed(2) + '%';
                     });
                 },
@@ -254,40 +254,6 @@
 
             updateDonut();
         }
-    }
-
-
-    /*
-     * Returns a json-like object.
-     */
-    function genData() {
-        var type = ['Flow execution Status'];
-        var unit = ['M', 'GB', ''];
-        var cat = ['Pass', 'Fail', 'No Run'];
-
-        var dataset = new Array();
-
-        for (var i = 0; i < type.length; i++) {
-            var data = new Array();
-            var total = 0;
-
-            for (var j = 0; j < cat.length; j++) {
-                var value = Math.random()*10*(3-i);
-                total += value;
-                data.push({
-                    "cat": cat[j],
-                    "val": value
-                });
-            }
-
-            dataset.push({
-                "type": type[i],
-                "unit": unit[i],
-                "data": data,
-                "total": total
-            });
-        }
-        return dataset;
     }
 
     function parseData(data,filterKey,title){                

@@ -61,6 +61,6 @@ data.forEach(function(d) {
       .style("fill", "steelblue")
       .attr("x", function(d) { return x(d.date); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { console.log(d.value); return y(d.value); })
+      .attr("y", function(d) {return y(d.value); })
       .attr("height", function(d) { return height - y(d.value); });
 }
