@@ -70,8 +70,14 @@ data.forEach(function(d) {
       .style("fill", "steelblue")
       .attr("x", function(d) { return x(d.date); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) {return y(d.value); })
+      .attr("y", height)
+      .attr("height", 0)
+      .transition()
+      .duration(1500)
+      .delay(function(d,i){ return i*250})
       .attr("height", function(d) { return height - y(d.value); })
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+      .attr("y", function(d) {return y(d.value); });
+
+      // .on('mouseover', tip.show)
+      // .on('mouseout', tip.hide);
 }

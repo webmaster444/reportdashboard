@@ -4,7 +4,9 @@
 
         var chart_m,
             chart_r,
-            color = d3.scale.category20();
+            // color = d3.scale.category20();
+
+        color = ['green', 'red', 'orange'];
 
         var getCatNames = function(dataset) {
             var catNames = new Array();
@@ -29,7 +31,7 @@
                 .attr('class', 'legend-icon')
                 .attr('r', 6)
                 .style('fill', function(d, i) {
-                    return color(i);
+                    return color[i];
                 });
     
             legends.append('text')
@@ -99,8 +101,8 @@
 
             thisDonut.selectAll('.value')
                 .text(function(d) {
-                    return (sum)? sum.toFixed(0) + d.unit
-                                : d.total.toFixed(0) + d.unit;
+                    return (sum)? d.data.cat+":"+sum.toFixed(0) + d.unit
+                                : 'total:' + d.total.toFixed(0) + d.unit;
                 });
             thisDonut.selectAll('.percentage')
                 .text(function(d) {
@@ -112,7 +114,7 @@
         var resetAllCenterText = function() {
             charts.selectAll('.value')
                 .text(function(d) {
-                    return d.total.toFixed(0) + d.unit;
+                    return 'Total:' + d.total.toFixed(0) + d.unit;
                 });
             charts.selectAll('.percentage')
                 .text('');
@@ -148,7 +150,7 @@
                     pathAnim(d3.select(this), 1);                    
                     var thisDonut = charts.select('.type' + j);                    
                     thisDonut.selectAll('.value').text(function(donut_d) {                        
-                        return d.data.val.toFixed(0) + donut_d.unit;
+                        return d.data.cat + ':'+ d.data.val.toFixed(0);
                     });
                     thisDonut.selectAll('.percentage').text(function(donut_d) {
                         return (d.data.val/donut_d.total*100).toFixed(2) + '%';
@@ -206,10 +208,10 @@
                 .attr('d', arc);
 
             paths.enter()
-                .append('svg:path')
-                    .attr('d', arc)
+                .append('svg:path')                
+                    .attr('d', arc)                    
                     .style('fill', function(d, i) {
-                        return color(i);
+                        return color[i];
                     })
                     .style('stroke', '#FFFFFF')
                     .on(eventObj)
