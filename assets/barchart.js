@@ -27,6 +27,15 @@ var svg = d3.select(wrapper).append("svg")
     .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
 
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";
+  })
+
+svg.call(tip);
+
 data.forEach(function(d) {
   d.date = d.key;
   d.value = +d.value;
@@ -62,5 +71,7 @@ data.forEach(function(d) {
       .attr("x", function(d) { return x(d.date); })
       .attr("width", x.rangeBand())
       .attr("y", function(d) {return y(d.value); })
-      .attr("height", function(d) { return height - y(d.value); });
+      .attr("height", function(d) { return height - y(d.value); })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
 }
