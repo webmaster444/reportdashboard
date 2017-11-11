@@ -31,7 +31,7 @@ var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";
+    return "<strong>"+d.key+": "+"</strong> <span style='color:red'>" + d.value + "</span>";
   })
 
 svg.call(tip);
@@ -68,17 +68,18 @@ data.forEach(function(d) {
       .data(data)
     .enter().append("rect")
       .style("fill", "steelblue")
+      .attr('class','bar')
       .attr("x", function(d) { return x(d.date); })
       .attr("width", x.rangeBand())
       .attr("y", height)
       .attr("height", 0)
       .transition()
       .duration(1500)
-      .delay(function(d,i){ return i*250})
+      .delay(function(d,i){ return i*10})
       .attr("height", function(d) { return height - y(d.value); })
       .attr("y", function(d) {return y(d.value); });
 
-    svg.selectAll(".bar").data(data)
+    svg.selectAll(".bar")
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide);
 }

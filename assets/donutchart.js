@@ -4,9 +4,7 @@
 
         var chart_m,
             chart_r,
-            // color = d3.scale.category20();
-
-        color = ['green', 'red', 'orange'];
+            color = d3.scale.ordinal().range(["green", "red", "orange", "blue", "lightblue"]);
 
         var getCatNames = function(dataset) {
             var catNames = new Array();
@@ -31,7 +29,7 @@
                 .attr('class', 'legend-icon')
                 .attr('r', 6)
                 .style('fill', function(d, i) {
-                    return color[i];
+                    return color(i);
                 });
     
             legends.append('text')
@@ -100,8 +98,8 @@
 
             thisDonut.selectAll('.value')
                 .text(function(d) {
-                    return (sum)? d.data.cat+":"+sum.toFixed(0) + d.unit
-                                : 'total:' + d.total.toFixed(0) + d.unit;
+                    return (sum)? d.data.cat+": "+sum.toFixed(0) + d.unit
+                                : 'total: ' + d.total.toFixed(0) + d.unit;
                 });
             thisDonut.selectAll('.percentage')
                 .text(function(d) {
@@ -113,7 +111,7 @@
         var resetAllCenterText = function() {
             charts.selectAll('.value')
                 .text(function(d) {
-                    return 'Total:' + d.total.toFixed(0) + d.unit;
+                    return 'Total: ' + d.total.toFixed(0) + d.unit;
                 });
             charts.selectAll('.percentage')
                 .text('');
@@ -149,7 +147,7 @@
                     pathAnim(d3.select(this), 1);                    
                     var thisDonut = charts.select('.type' + j);                    
                     thisDonut.selectAll('.value').text(function(donut_d) {                        
-                        return d.data.cat + ':'+ d.data.val.toFixed(0);
+                        return d.data.cat + ': '+ d.data.val.toFixed(0);
                     });
                     thisDonut.selectAll('.percentage').text(function(donut_d) {
                         return (d.data.val/donut_d.total*100).toFixed(2) + '%';
@@ -208,13 +206,23 @@
 
             paths.enter()
                 .append('svg:path')                
-                    .attr('d', arc)                    
-                    .style('fill', function(d, i) {
-                        return color[i];
-                    })
-                    .style('stroke', '#FFFFFF')
-                    .on(eventObj)
+                .attr('d', arc)                    
+                .style('fill', function(d, i) {
+                    return color(i);
+                })
+                .style('stroke', '#FFFFFF')
+                .transition().delay(function(d,i) {return i * 500; }).duration(500)
+                .attrTween('d', function(d) {                    
+                    var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+                        return function(t) {
+                            d.endAngle = i(t); 
+                            return arc(d)
+                    }
+                }); 
 
+                    // .on(eventObj)
+  
+  
             paths.exit().remove();
 
             resetAllCenterText();
@@ -255,44 +263,4 @@
 
             updateDonut();
         }
-    }
-
-    function parseData(data,filterKey,title){                
-        var datasetByTestStatus = d3.nest()
-        .key(function(d){return d[filterKey];})
-        .rollup(function(v){return v.length;})
-        .entries(data);
-                
-        var data1 = Object.values(datasetByTestStatus);        
-
-        var cat = [];
-        var counts = [];
-        for(index in data1){
-            var tmp_array = Object.values(data1[index]);
-            cat.push(tmp_array[0]);
-            counts.push(tmp_array[1]);
-        }
-
-        var total = 0;
-        for(count in counts){
-            total +=counts[count];
-        }
-        
-    
-        var dataset = new Array();
-        var tmp_data = new Array();
-        for(var j=0; j<cat.length; j++){
-            tmp_data.push({
-                "cat":cat[j],
-                "val":counts[j]
-            });
-        }
-
-        dataset.push({
-            "type":title,
-            "unit":"",
-            "data":tmp_data,
-            "total":total
-        });
-        return dataset;        
-    }
+    }    
