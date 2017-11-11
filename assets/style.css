@@ -4,6 +4,7 @@ body {
     width: 960px;
 }
 
-#flow_execution_chart{
-	width: 40%;
+#flow_execution_chart,#scenarios_by_funcion_chart,#behavioural_test_coverage{
+	width: 33%;
+	float: left;
 }

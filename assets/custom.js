@@ -1,19 +1,24 @@
-$(function() {
-
-        var donutData = genData();
-
-        d3.json('assets/jsondata.json',function(data){
-            parseData(data);
-        })
-        console.log(donutData);
-        var donuts = new DonutCharts();
+$(function() {    
+    var donutData,donutData1;
+    d3.json('assets/jsondata.json',function(data){
+        var _data = data;
+        
+        donutData = parseData(_data,'test status');        
+        var donuts = new DonutCharts('#flow_execution_chart');
         donuts.create(donutData);
-    });
+        
+        donutData1 = parseData(data,'auomated');
+        var donuts1 = new DonutCharts('#behavioural_test_coverage');
+        donuts1.create(donutData1);
+
+
+    })
+});
     
 
-    function DonutCharts() {
+    function DonutCharts(chartWrapper) {
 
-        var charts = d3.select('#flow_execution_chart');
+        var charts = d3.select(chartWrapper);
 
         var chart_m,
             chart_r,
@@ -233,7 +238,7 @@ $(function() {
         }
 
         this.create = function(dataset) {
-            var $charts = $('#flow_execution_chart');
+            var $charts = $(chartWrapper);
             chart_m = $charts.innerWidth() / dataset.length / 2 * 0.14;
             chart_r = $charts.innerWidth() / dataset.length / 2 * 0.85;
 
@@ -303,6 +308,42 @@ $(function() {
         return dataset;
     }
 
-    function parseData(data){
-        console.log(data);
+    function parseData(data,filterKey){                
+        var datasetByTestStatus = d3.nest()
+        .key(function(d){return d[filterKey];})
+        .rollup(function(v){return v.length;})
+        .entries(data);
+                
+        var data1 = Object.values(datasetByTestStatus);        
+
+        var cat = [];
+        var counts = [];
+        for(index in data1){
+            var tmp_array = Object.values(data1[index]);
+            cat.push(tmp_array[0]);
+            counts.push(tmp_array[1]);
+        }
+
+        var total = 0;
+        for(count in counts){
+            total +=counts[count];
+        }
+        
+    
+        var dataset = new Array();
+        var tmp_data = new Array();
+        for(var j=0; j<cat.length; j++){
+            tmp_data.push({
+                "cat":cat[j],
+                "val":counts[j]
+            });
+        }
+
+        dataset.push({
+            "type":"Flow execution Status",
+            "unit":"",
+            "data":tmp_data,
+            "total":total
+        });
+        return dataset;        
     }
