@@ -131,13 +131,15 @@ function tabulate(data, columns, selectedKey, selectedValue,context) {
     .append('th')
       .text(function (column) { return column; });
 
-  // // create a row for each object in the data
+  // create a row for each object in the data
   var rows = tbody.selectAll('tr')
     .data(oData.filter(function(d){
     return d[selectedKey] == selectedValue;
   }))
     .enter()
-    .append('tr');
+    .append('tr').attr('data-toggle','tooltip').attr('title',function(d){
+      return d.scenario;
+    });
 
   // // create a cell in each row for each column
   var cells = rows.selectAll('td')
@@ -147,10 +149,11 @@ function tabulate(data, columns, selectedKey, selectedValue,context) {
       });
     })
     .enter()    
-    .append('td')
+    .append('td')    
     .text(function (d) { return d.value; });
 
   return table;
+
 }
 }
 

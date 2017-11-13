@@ -11,7 +11,8 @@ $(function() {
 
         var donutData1 = parseData(data,'auomated', "Behavioural test coverage");
         donutChart('#behavioural_test_coverage', donutData1,_data, 'auomated');                
-    })
+        $('[data-toggle="tooltip"]').tooltip({container: '#table_data'}); 
+    })    
 });
 
 function parseBarChartData(data){

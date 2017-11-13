@@ -82,8 +82,7 @@ data.forEach(function(d) {
     svg.selectAll(".bar")
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
-      .on('click', function(d){
-        console.log(d);
+      .on('click', function(d){        
         tabulate(oData,['id', 'visual'], selectedKey, d.key, svg); 
       })
 
@@ -106,9 +105,11 @@ function tabulate(data, columns, selectedKey, selectedValue,context) {
     return d[selectedKey] == selectedValue;
   }))
     .enter()
-    .append('tr');
+    .append('tr').attr('data-toggle','tooltip').attr('title',function(d){
+      return d.scenario;
+    });;  
 
-  // // create a cell in each row for each column
+  // // create a cell in each row for each column    
   var cells = rows.selectAll('td')
     .data(function (row) {                  
       return columns.map(function (column) {        
