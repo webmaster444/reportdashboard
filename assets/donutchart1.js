@@ -1,4 +1,4 @@
-function donutChart(chartWrapper, dataset) {
+function donutChart(chartWrapper, dataset,oData) {
     var width = 960,
         height = 960,
         radius = Math.min(width, height - 100) / 2;
@@ -35,7 +35,7 @@ function donutChart(chartWrapper, dataset) {
         .attr('class', 'd3-tip')
         .offset([-10, 0])
         .html(function(d) {
-            return "<strong>" + d.data.name + ": " + "</strong> <span style='color:red'>" + d.data.total + " / </span>" +""+" <span style='color:red'>" + formatPercent(d.data.total / sum) + "</span>";
+            return "<strong>" + d.data.name + ": " + "</strong> <span style='color:red'>" + d.data.total + " / </span>" +""+" <span style='color:red'>" + formatPercent(d.data.total / sum) +"</span>";
         })
     
     dataset.forEach(function(d){
@@ -80,7 +80,9 @@ function donutChart(chartWrapper, dataset) {
             var thisPath = d3.select(this);
             var clicked = thisPath.classed('clicked');
             pathAnim(thisPath, ~~(!clicked));
-            thisPath.classed('clicked', !clicked);
+            thisPath.classed('clicked', !clicked);   
+            console.log(d);
+            tabulate(oData,['id', 'visual']);                            
         });
     // g.append("text")
     //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
@@ -116,4 +118,39 @@ function donutChart(chartWrapper, dataset) {
                 break;
         }
     }
+
+function tabulate(data, columns, key, value) { 
+  d3.select('#table_data').empty();
+  var table = d3.select('#table_data').append('table')
+  var thead = table.append('thead')
+  var tbody = table.append('tbody');
+
+  // append the header row
+  thead.append('tr')
+    .selectAll('th')
+    .data(columns).enter()
+    .append('th')
+      .text(function (column) { return column; });
+
+  // create a row for each object in the data
+  var rows = tbody.selectAll('tr')
+    .data(data)
+    .enter()
+    .append('tr');
+
+  // create a cell in each row for each column
+  var cells = rows.selectAll('td')
+    .data(function (row) {                  
+      return columns.map(function (column) {        
+        return {column: column, value: row[column]};
+      });
+    })
+    .enter()    
+    .append('td')
+    .filter(function(d) { return d[key] == value })
+      .text(function (d) { return d.value; });
+
+  return table;
 }
+}
+

@@ -1,21 +1,16 @@
 $(function() {    
     var donutData,donutData1;
-    d3.json('assets/jsondata.json',function(data){
-        var _data = data;
-        
-        // donutData = parseData(_data,'test status','Flow exection status');        
-        // var donuts = new DonutCharts('#flow_execution_chart');
-        // donuts.create(donutData);
-
-        var donutData = parseData(data, 'test status', 'Flow exection status');
-        donutChart('#flow_execution_chart', donutData);
+    d3.json('assets/data/jsondata.json',function(data){     
+        let _data = data;                       
+        localStorage.setItem('jsondata',_data);
+        var donutData = parseData(data, 'test status', 'Flow exection status');        
+        donutChart('#flow_execution_chart', donutData,_data);
 
         var barChartData = parseBarChartData(_data);
         drawBarchart("#scenarios_by_funcion_chart", barChartData);
 
         var donutData1 = parseData(data,'auomated', "Behavioural test coverage");
-        donutChart('#behavioural_test_coverage', donutData1);
-        // donuts1.create(donutData1);
+        donutChart('#behavioural_test_coverage', donutData1,_data);                
     })
 });
 
@@ -69,12 +64,5 @@ function parseData(data,filterKey,title){
             });
         }
 
-return tmp_data;
-        // dataset.push({
-        //     "type":title,
-        //     "unit":"",
-        //     "data":tmp_data,
-        //     "total":total
-        // });
-        // return dataset;        
-    }
+    return tmp_data;
+}
