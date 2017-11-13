@@ -7,15 +7,15 @@ function donutChart(chartWrapper, dataset){
 // ];
 
 var width = 960,
-    height = 500,
+    height = 700,
     radius = Math.min(width, height) / 2;
 
 var color = d3.scale.ordinal()
     .range(["green", "red", "orange", "#6b486b", "#a05d56"]);
 
 var arc = d3.svg.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(radius - 70);
+    .outerRadius(radius - 50)
+    .innerRadius(radius - 100);
 
 var pie = d3.layout.pie()
     .sort(null)
@@ -47,9 +47,11 @@ svg.call(tip);
     .enter().append("g")
       .attr("class", "arc");
 
-  g.append("path")
+  var arc_path = g.append("path")
+    .attr('class','arc_path')
 	.style("fill", function(d) { return color(d.data.name); })
-    .transition().delay(function(d,i) {
+
+    arc_path.transition().delay(function(d,i) {
 	return i * 500; }).duration(500)
 	.attrTween('d', function(d) {
 		var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
@@ -57,10 +59,24 @@ svg.call(tip);
 			d.endAngle = i(t); 
 			return arc(d)
 			}
-		}); 
-
-  svg.selectAll('.arc').on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+		})  
+  
+  svg.selectAll('.arc_path').on('mouseover',function(d,i,j){    
+    pathAnim(d3.select(this), 1);
+    tip.show(d);
+  })
+  .on('mouseout', function(d,i,j){
+    var thisPath = d3.select(this);
+    if (!thisPath.classed('clicked')) {
+      pathAnim(thisPath, 0);
+    }
+    tip.hide(d);
+  }).on('click',function(d,i,j){
+      var thisPath = d3.select(this);
+      var clicked = thisPath.classed('clicked');
+      pathAnim(thisPath, ~~(!clicked));
+      thisPath.classed('clicked', !clicked);
+  });
   // g.append("text")
   //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
   //     .attr("dy", ".35em")
@@ -75,4 +91,25 @@ function type(d) {
   return d;
 }
 
+var pathAnim = function(path, dir) {
+  switch(dir) {
+    case 0:
+        path.transition()
+            .duration(500)
+            .ease('bounce')
+            .attr('d', d3.svg.arc()
+                .innerRadius((radius-100))
+                .outerRadius(radius-50)
+            );
+        break;
+
+    case 1:
+        path.transition()
+            .attr('d', d3.svg.arc()
+                .innerRadius((radius-100))
+                .outerRadius((radius-50) * 1.08)
+            );
+        break;
+  }
+}  
 }
