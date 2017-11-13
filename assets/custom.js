@@ -7,7 +7,7 @@ $(function() {
         donutChart('#flow_execution_chart', donutData,_data,'test status');
 
         var barChartData = parseBarChartData(_data);
-        drawBarchart("#scenarios_by_funcion_chart", barChartData);
+        drawBarchart("#scenarios_by_funcion_chart", barChartData,_data,'funcional area');
 
         var donutData1 = parseData(data,'auomated', "Behavioural test coverage");
         donutChart('#behavioural_test_coverage', donutData1,_data, 'auomated');                

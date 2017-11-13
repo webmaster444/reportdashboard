@@ -1,4 +1,4 @@
-function drawBarchart(wrapper, data){
+function drawBarchart(wrapper, data,oData,selectedKey){
 var margin = {top: 50, right: 20, bottom: 110, left: 40},
     width = 600 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
@@ -81,5 +81,44 @@ data.forEach(function(d) {
 
     svg.selectAll(".bar")
       .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+      .on('mouseout', tip.hide)
+      .on('click', function(d){
+        console.log(d);
+        tabulate(oData,['id', 'visual'], selectedKey, d.key, svg); 
+      })
+
+function tabulate(data, columns, selectedKey, selectedValue,context) {   
+  d3.select('#table_data').html('');
+  var table = d3.select('#table_data').append('table')
+  var thead = table.append('thead')
+  var tbody = table.append('tbody');
+
+  // append the header row
+  thead.append('tr')
+    .selectAll('th')
+    .data(columns).enter()
+    .append('th')
+      .text(function (column) { return column; });
+
+  // // create a row for each object in the data
+  var rows = tbody.selectAll('tr')
+    .data(oData.filter(function(d){
+    return d[selectedKey] == selectedValue;
+  }))
+    .enter()
+    .append('tr');
+
+  // // create a cell in each row for each column
+  var cells = rows.selectAll('td')
+    .data(function (row) {                  
+      return columns.map(function (column) {        
+        return {column: column, value: row[column]};
+      });
+    })
+    .enter()    
+    .append('td')
+    .text(function (d) { return d.value; });
+
+  return table;
+}
 }
