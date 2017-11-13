@@ -81,7 +81,7 @@ function donutChart(chartWrapper, dataset,oData,selectedKey) {
             var clicked = thisPath.classed('clicked');
             pathAnim(thisPath, ~~(!clicked));
             thisPath.classed('clicked', !clicked);               
-            tabulate(oData,['Flow'], selectedKey, d.data.name, svg);                            
+            tabulate(oData,['Id','Flow','Status'], selectedKey, d.data.name, svg);                            
         });
     // g.append("text")
     //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })

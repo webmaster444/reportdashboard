@@ -83,7 +83,7 @@ data.forEach(function(d) {
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
       .on('click', function(d){        
-        tabulate(oData,['Flow'], selectedKey, d.key, svg); 
+        tabulate(oData,['Id','Flow','Status'], selectedKey, d.key, svg); 
       })
 
 function tabulate(data, columns, selectedKey, selectedValue,context) {   
