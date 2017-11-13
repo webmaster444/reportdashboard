@@ -1,7 +1,7 @@
 body {
     font-size: 100%;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    width: 1280px;
+    max-width: 1500px;
     margin: 0 auto;
 }
 
@@ -46,4 +46,8 @@ body {
 
 text{
 	text-transform: capitalize;
+}
+
+h3{
+  text-align: center;
 }
