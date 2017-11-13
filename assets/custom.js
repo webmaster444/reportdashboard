@@ -1,23 +1,23 @@
 $(function() {    
     var donutData,donutData1;
-    d3.json('assets/data/jsondata.json',function(data){     
+    d3.json('assets/data/tests1.json',function(data){     
         let _data = data;                       
         localStorage.setItem('jsondata',_data);
-        var donutData = parseData(data, 'test status', 'Flow exection status');        
-        donutChart('#flow_execution_chart', donutData,_data,'test status');
+        var donutData = parseData(data, 'Status', 'Flow exection status');        
+        donutChart('#flow_execution_chart', donutData,_data,'Status');
 
         var barChartData = parseBarChartData(_data);
-        drawBarchart("#scenarios_by_funcion_chart", barChartData,_data,'funcional area');
+        drawBarchart("#scenarios_by_funcion_chart", barChartData,_data,'Functional area');
 
-        var donutData1 = parseData(data,'auomated', "Behavioural test coverage");
-        donutChart('#behavioural_test_coverage', donutData1,_data, 'auomated');                
+        var donutData1 = parseData(data,'Automated', "Behavioural test coverage");
+        donutChart('#behavioural_test_coverage', donutData1,_data, 'Automated');                
         $('[data-toggle="tooltip"]').tooltip({container: '#table_data'}); 
     })    
 });
 
 function parseBarChartData(data){
     var dataset = d3.nest()
-        .key(function(d){return d['funcional area'];})
+        .key(function(d){return d['Functional area'];})
         .rollup(function(v){return v.length;})
         .entries(data);
     

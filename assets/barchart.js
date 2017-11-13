@@ -83,7 +83,7 @@ data.forEach(function(d) {
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
       .on('click', function(d){        
-        tabulate(oData,['id', 'visual'], selectedKey, d.key, svg); 
+        tabulate(oData,['Flow'], selectedKey, d.key, svg); 
       })
 
 function tabulate(data, columns, selectedKey, selectedValue,context) {   
@@ -106,7 +106,7 @@ function tabulate(data, columns, selectedKey, selectedValue,context) {
   }))
     .enter()
     .append('tr').attr('data-toggle','tooltip').attr('title',function(d){
-      return d.scenario;
+      return d.Scenario;
     });;  
 
   // // create a cell in each row for each column    

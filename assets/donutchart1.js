@@ -81,7 +81,7 @@ function donutChart(chartWrapper, dataset,oData,selectedKey) {
             var clicked = thisPath.classed('clicked');
             pathAnim(thisPath, ~~(!clicked));
             thisPath.classed('clicked', !clicked);               
-            tabulate(oData,['id', 'visual'], selectedKey, d.data.name, svg);                            
+            tabulate(oData,['Flow'], selectedKey, d.data.name, svg);                            
         });
     // g.append("text")
     //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
@@ -138,7 +138,7 @@ function tabulate(data, columns, selectedKey, selectedValue,context) {
   }))
     .enter()
     .append('tr').attr('data-toggle','tooltip').attr('title',function(d){
-      return d.scenario;
+      return d.Scenario;
     });
 
   // // create a cell in each row for each column
