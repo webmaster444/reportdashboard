@@ -1,4 +1,4 @@
-function donutChart(chartWrapper, dataset,oData) {
+function donutChart(chartWrapper, dataset,oData,selectedKey) {
     var width = 960,
         height = 960,
         radius = Math.min(width, height - 100) / 2;
@@ -80,9 +80,8 @@ function donutChart(chartWrapper, dataset,oData) {
             var thisPath = d3.select(this);
             var clicked = thisPath.classed('clicked');
             pathAnim(thisPath, ~~(!clicked));
-            thisPath.classed('clicked', !clicked);   
-            console.log(d);
-            tabulate(oData,['id', 'visual']);                            
+            thisPath.classed('clicked', !clicked);               
+            tabulate(oData,['id', 'visual'], selectedKey, d.data.name, svg);                            
         });
     // g.append("text")
     //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
@@ -119,8 +118,8 @@ function donutChart(chartWrapper, dataset,oData) {
         }
     }
 
-function tabulate(data, columns, key, value) { 
-  d3.select('#table_data').empty();
+function tabulate(data, columns, selectedKey, selectedValue,context) {   
+  d3.select('#table_data').html('');
   var table = d3.select('#table_data').append('table')
   var thead = table.append('thead')
   var tbody = table.append('tbody');
@@ -132,13 +131,15 @@ function tabulate(data, columns, key, value) {
     .append('th')
       .text(function (column) { return column; });
 
-  // create a row for each object in the data
+  // // create a row for each object in the data
   var rows = tbody.selectAll('tr')
-    .data(data)
+    .data(oData.filter(function(d){
+    return d[selectedKey] == selectedValue;
+  }))
     .enter()
     .append('tr');
 
-  // create a cell in each row for each column
+  // // create a cell in each row for each column
   var cells = rows.selectAll('td')
     .data(function (row) {                  
       return columns.map(function (column) {        
@@ -147,8 +148,7 @@ function tabulate(data, columns, key, value) {
     })
     .enter()    
     .append('td')
-    .filter(function(d) { return d[key] == value })
-      .text(function (d) { return d.value; });
+    .text(function (d) { return d.value; });
 
   return table;
 }

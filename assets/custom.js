@@ -4,13 +4,13 @@ $(function() {
         let _data = data;                       
         localStorage.setItem('jsondata',_data);
         var donutData = parseData(data, 'test status', 'Flow exection status');        
-        donutChart('#flow_execution_chart', donutData,_data);
+        donutChart('#flow_execution_chart', donutData,_data,'test status');
 
         var barChartData = parseBarChartData(_data);
         drawBarchart("#scenarios_by_funcion_chart", barChartData);
 
         var donutData1 = parseData(data,'auomated', "Behavioural test coverage");
-        donutChart('#behavioural_test_coverage', donutData1,_data);                
+        donutChart('#behavioural_test_coverage', donutData1,_data, 'auomated');                
     })
 });
 
