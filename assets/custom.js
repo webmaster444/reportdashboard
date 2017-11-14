@@ -3,17 +3,24 @@ $(function() {
     d3.json('assets/data/tests1.json',function(data){     
         let _data = data;                       
         
-        var donutData = parseData(data, 'Status', 'Flow exection status');        
+        var donutData = parseData(data, 'Status');        
         donutChart('#flow_execution_chart', donutData,_data,'Status');
 
         var barChartData = parseBarChartData(_data);
         drawBarchart("#scenarios_by_funcion_chart", barChartData,_data,'Functional area');
         drawHeatmap("#heatmap_functional_area", barChartData,_data,'Functional area');
 
-        var donutData1 = parseData(data,'Automated', "Behavioural test coverage");
+        var donutData1 = parseData(data,'Automated');
         donutChart('#behavioural_test_coverage', donutData1,_data, 'Automated');                
         $('[data-toggle="tooltip"]').tooltip({container: '#table_data'}); 
-    })    
+    });
+    d3.json('assets/data/api_tests.json',function(data){     
+        let _data = data;                       
+        
+        var donutData = parseData(data, 'Status');        
+        donutChart('#flow_execution_chart', donutData,_data,'Status');
+                     
+    })      
 });
 
 function parseBarChartData(data){
@@ -35,7 +42,7 @@ function parseBarChartData(data){
     return tmp_data;
 }
 
-function parseData(data,filterKey,title){                
+function parseData(data,filterKey){                
         var datasetByTestStatus = d3.nest()
         .key(function(d){return d[filterKey];})
         .rollup(function(v){return v.length;})

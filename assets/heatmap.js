@@ -8,7 +8,7 @@ var margin = {top:50, right:0, bottom:100, left:30},
 
 		colors = ["#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081"],
 		days = [],
-	times = [];
+		times = [];
 	
 	var heatmap;
 	var legend;
