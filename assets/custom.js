@@ -2,12 +2,13 @@ $(function() {
     var donutData,donutData1;
     d3.json('assets/data/tests1.json',function(data){     
         let _data = data;                       
-        localStorage.setItem('jsondata',_data);
+        
         var donutData = parseData(data, 'Status', 'Flow exection status');        
         donutChart('#flow_execution_chart', donutData,_data,'Status');
 
         var barChartData = parseBarChartData(_data);
         drawBarchart("#scenarios_by_funcion_chart", barChartData,_data,'Functional area');
+        drawHeatmap("#heatmap_functional_area", barChartData,_data,'Functional area');
 
         var donutData1 = parseData(data,'Automated', "Behavioural test coverage");
         donutChart('#behavioural_test_coverage', donutData1,_data, 'Automated');                
