@@ -20,7 +20,16 @@ $(function() {
         var donutData = parseData(data, 'Status');        
         drawHorizontalBarChart('#horizontal_bar_chart', donutData,_data,'Status');
                      
-    })      
+    });
+
+    $(document).on('click', 'rect', function(){ 
+        $('.clicked').removeClass('clicked');
+        $(this).addClass('clicked');
+    }); 
+    $(document).on('click', 'path.arc_path', function(){ 
+        $('.clicked').removeClass('clicked');
+        $(this).addClass('clicked');
+    }); 
 });
 
 function parseBarChartData(data){

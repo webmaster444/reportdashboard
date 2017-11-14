@@ -98,3 +98,8 @@ h3{
   text-anchor: start;
   font-size: 14px;
 }
+
+.clicked{
+  stroke: lightgrey;
+  stroke-width: 10px;
+}
