@@ -1,13 +1,13 @@
 function drawHeatmap(chartWrapper, dataset,oData,selectedKey){
 var margin = {top:50, right:0, bottom:100, left:30},
 		width=960-margin.left-margin.right,
-		height=430-margin.top-margin.bottom,
+		height=250-margin.top-margin.bottom,
 		gridSize=Math.floor(width/24),
 		legendElementWidth=gridSize*2.665,
 		buckets = 10,
 
 		colors = ["#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081"],
-		days = ["Mo"],
+		days = [],
 	times = [];
 	
 	var heatmap;
@@ -16,12 +16,13 @@ var margin = {top:50, right:0, bottom:100, left:30},
 for(var index in dataset){	
 	times.push(dataset[index].key);
 }
-console.log(times);
+gridSize = Math.floor(width / times.length);
 
 
 	var svg = d3.select(chartWrapper).append("svg")
-		.attr("width",width + margin.left+margin.right)
-		.attr("height", height+margin.top+margin.bottom)
+		.attr("width",'100%')
+		.attr("height", 'auto')
+		.attr('viewBox', '0 0 '+ parseInt(width + margin.left+margin.right) + ' ' + parseInt(height+margin.top+margin.bottom))
 		.append("g")
 		.attr("transform", "translate("+ margin.left+","+margin.top+")");
 	
@@ -61,7 +62,7 @@ console.log(times);
 			var heatMap = svg.selectAll(".hour")
 				.data(dataset)
 				.enter().append("rect")
-				.attr("x", function(d) {return (d.hour) * gridSize;})
+				.attr("x", function(d,i) {return i * gridSize;})
 				.attr("y", function(d) {return (d.day) * gridSize;})
 				.attr("rx", 4)
 				.attr("ry", 4)
