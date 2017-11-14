@@ -93,3 +93,8 @@ h3{
   width: 50%;
   float:left;
 }
+
+#horizontal_bar_chart text.label{
+  text-anchor: start;
+  font-size: 14px;
+}

@@ -8,6 +8,7 @@
             barPadding = (height-axisMargin-margin*2)*0.6/dataset.length,
             bar, svg, scale, xAxis, labelWidth = 0;
 
+    var color = ['green','red'];
     max = d3.max(dataset, function(d) { return d.total; });
 
     svg = d3.select(chartWrapper)
@@ -55,24 +56,26 @@
 						.duration(1500)
             .attr("width", function(d){
                 return scale(d.total);
+            }).attr('fill',function(d,i){
+                return color[i];
             })
-            bar.on('click',function(d){                
+        bar.on('click',function(d){                
                 tabulate(oData,['Id','HTTP Method','URI','Description'], selectedKey, d.name, svg);
             });
 
-    bar.append("text")
-            .attr("class", "value")
-            .attr("y", barHeight / 2)
-            .attr("dx", -valueMargin + labelWidth) //margin right
-            .attr("dy", ".35em") //vertical align middle
-            .attr("text-anchor", "end")
-            .text(function(d){
-                return (d.total);
-            })
-            .attr("x", function(d){
-                var width = this.getBBox().width;
-                return Math.max(width + valueMargin, scale(d.total));
-            });
+    // bar.append("text")
+    //         .attr("class", "value")
+    //         .attr("y", barHeight / 2)
+    //         .attr("dx", -valueMargin + labelWidth) //margin right
+    //         .attr("dy", ".35em") //vertical align middle
+    //         .attr("text-anchor", "end")
+    //         .text(function(d){
+    //             return (d.total);
+    //         })
+    //         .attr("x", function(d){
+    //             var width = this.getBBox().width;
+    //             return Math.max(width + valueMargin, scale(d.total));
+    //         });
 
     svg.insert("g",":first-child")
             .attr("class", "axisHorizontal")
