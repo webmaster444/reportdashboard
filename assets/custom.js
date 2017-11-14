@@ -38,8 +38,8 @@ $(function() {
 
     $(document).on('click', 'rect', function(){ 
         $('.clicked').removeClass('clicked');
-        $(this).addClass('clicked');
         d3.select(this).moveToFront();
+        $(this).addClass('clicked');        
     }); 
     $(document).on('click', 'path.arc_path', function(){ 
         $('.clicked').removeClass('clicked');

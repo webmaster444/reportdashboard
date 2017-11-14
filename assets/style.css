@@ -99,11 +99,16 @@ h3{
   font-size: 14px;
 }
 
-.clicked{
+.hour.bordered.clicked ,.clicked{
   stroke: lightgrey;
   stroke-width: 10px;
 }
 
 #table_data table{
   margin: 0 auto;
+}
+
+.hour.bordered{
+  stroke:lightblue;
+  stroke-width: 2px;
 }
