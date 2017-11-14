@@ -1,6 +1,6 @@
 $(function() {    
     var donutData,donutData1;
-    d3.json('assets/data/tests1.json',function(data){     
+    d3.json('assets/data/tests2.json',function(data){     
         let _data = data;                       
         
         var donutData = parseData(data, 'Status');        
@@ -14,7 +14,7 @@ $(function() {
         donutChart('#behavioural_test_coverage', donutData1,_data, 'Automated');                
         $('[data-toggle="tooltip"]').tooltip({container: '#table_data'}); 
     });
-    d3.json('assets/data/api_tests.json',function(data){     
+    d3.json('assets/data/api_tests2.json',function(data){     
         let _data = data;                       
         
         var donutData = parseData(data, 'Status');        
