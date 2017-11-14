@@ -7,13 +7,17 @@ var margin = {top:50, right:0, bottom:100, left:30},
 		buckets = 10,
 
 		colors = ["#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081"],
-		days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-	times = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12am", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm"];
+		days = ["Mo"],
+	times = [];
 	
 	var heatmap;
 	var legend;
 
-console.log(dataset);
+for(var index in dataset){	
+	times.push(dataset[index].key);
+}
+console.log(times);
+
 
 	var svg = d3.select(chartWrapper).append("svg")
 		.attr("width",width + margin.left+margin.right)
@@ -28,11 +32,10 @@ console.log(dataset);
 		// 	value:+d.per_day_per_hour
 		// 	};
 		// },		
-			
-			console.log(data);
+						
 			
 			var colorScale = d3.scale.quantile()
-				.domain([0, (d3.max(data, function(d){return d.value;})/2), d3.max(data, function(d){return d.value;})])
+				.domain([0, (d3.max(dataset, function(d){return d.value;})/2), d3.max(dataset, function(d){return d.value;})])
 				.range(colors);
 
 
@@ -56,7 +59,7 @@ console.log(dataset);
 				.attr("class", function(d, i) { return ((i>=9 && i<= 17) ? "timeLabel mono axis axis-worktime": "timeLabel mono axis"); });
 				
 			var heatMap = svg.selectAll(".hour")
-				.data(data)
+				.data(dataset)
 				.enter().append("rect")
 				.attr("x", function(d) {return (d.hour) * gridSize;})
 				.attr("y", function(d) {return (d.day) * gridSize;})
