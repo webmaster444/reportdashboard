@@ -85,3 +85,8 @@ h3{
         fill: steelblue;
         fill-opacity: .9;
 }
+
+#heatmap_functional_area{
+  clear: both;
+  width: 100%;
+}

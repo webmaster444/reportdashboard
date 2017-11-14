@@ -60,7 +60,7 @@ gridSize = Math.floor(width / times.length);
 		.attr("class", "hour bordered")
 		.attr("width", gridSize)
 		.attr("height", gridSize)
-		.style("fill", colors[0]).on('click',function(d){console.log(d); tabulate(oData,['Id','Flow','Status'], selectedKey, d.key, svg);});
+		.style("fill", colors[0]).on('click',function(d){tabulate(oData,['Id','Flow','Status'], selectedKey, d.key, svg);});
 		
 	heatMap.transition().duration(1000)
 		.style("fill", function(d){ return colorScale(d.value);});

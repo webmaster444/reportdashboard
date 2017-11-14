@@ -55,6 +55,9 @@
 						.duration(1500)
             .attr("width", function(d){
                 return scale(d.total);
+            })
+            bar.on('click',function(d){                
+                tabulate(oData,['Id','HTTP Method','URI','Description'], selectedKey, d.name, svg);
             });
 
     bar.append("text")
@@ -76,4 +79,41 @@
             .attr("transform", "translate(" + (margin + labelWidth) + ","+ (height - axisMargin - margin)+")")
             .call(xAxis);
 
+function tabulate(data, columns, selectedKey, selectedValue,context) {   
+  d3.select('#table_data').html('');
+  var table = d3.select('#table_data').append('table')
+  var thead = table.append('thead')
+  var tbody = table.append('tbody');
+
+  // append the header row
+  thead.append('tr')
+    .selectAll('th')
+    .data(columns).enter()
+    .append('th')
+      .text(function (column) { return column; });
+
+  // create a row for each object in the data
+  var rows = tbody.selectAll('tr')
+    .data(oData.filter(function(d){
+    return d[selectedKey] == selectedValue;
+  }))
+    .enter()
+    .append('tr').attr('data-toggle','tooltip').attr('title',function(d){
+      return d.Scenario;
+    });
+
+  // // create a cell in each row for each column
+  var cells = rows.selectAll('td')
+    .data(function (row) {                  
+      return columns.map(function (column) {        
+        return {column: column, value: row[column]};
+      });
+    })
+    .enter()    
+    .append('td')    
+    .text(function (d) { return d.value; });
+
+  return table;
+
+}
 }
