@@ -68,8 +68,10 @@ h3{
 }
 
 #horizontal_bar_chart{
-  width: 100%;
+  width: 50%;
   min-height: 300px;
+  display: inline;
+  float: left;
 }
 
 #horizontal_bar_chart .axisHorizontal path{
@@ -88,5 +90,6 @@ h3{
 
 #heatmap_functional_area{
   clear: both;
-  width: 100%;
+  width: 50%;
+  float:left;
 }

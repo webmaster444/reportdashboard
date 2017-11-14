@@ -1,7 +1,7 @@
 function drawHeatmap(chartWrapper, dataset,oData,selectedKey){
 var margin = {top:50, right:0, bottom:100, left:30},
 		width=960-margin.left-margin.right,
-		height=250-margin.top-margin.bottom,
+		height=480-margin.top-margin.bottom,
 		gridSize=Math.floor(width/24),
 		legendElementWidth=gridSize*2.665,
 		buckets = 10,
@@ -16,7 +16,9 @@ var margin = {top:50, right:0, bottom:100, left:30},
 for(var index in dataset){	
 	times.push(dataset[index].key);
 }
-gridSize = Math.floor(width / times.length);
+var blockCnt = 7;
+var tmpRows = Math.floor(times.length / blockCnt)
+gridSize = Math.floor(width / times.length * tmpRows);
 
 
 	var svg = d3.select(chartWrapper).append("svg")
@@ -53,8 +55,10 @@ gridSize = Math.floor(width / times.length);
 	var heatMap = svg.selectAll(".hour")
 		.data(dataset)
 		.enter().append("rect")
-		.attr("x", function(d,i) {return i * gridSize;})
-		.attr("y", 0)
+		.attr("x", function(d,i) {return (i % blockCnt) * gridSize;})
+		.attr("y", function(d,i){
+			return Math.floor(i / blockCnt) * gridSize;			
+		})
 		.attr("rx", 4)
 		.attr("ry", 4)
 		.attr("class", "hour bordered")
