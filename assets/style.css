@@ -104,11 +104,12 @@ h3{
   stroke-width: 10px;
 }
 
-#table_data table{
-  margin: 0 auto;
-}
-
 .hour.bordered{
   stroke:lightblue;
   stroke-width: 2px;
 }
+
+#table_data table{
+  margin: 0 auto;
+}
+
