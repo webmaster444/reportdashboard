@@ -31,24 +31,24 @@ gridSize = Math.floor(width / times.length);
 		.range(colors);
 
 
-	var dayLabels = svg.selectAll(".dayLabel")
-		.data(days)
-		.enter().append("text")
-		.text(function (d) {return d; })
-		.attr("y", function (d, i){ return i*gridSize;})
-		.style("text-anchor", "end")
-		.attr("transform", "translate(-6," + gridSize/1.5+")")
-		.attr("class", function(d, i) { return ((i>=0 && i<=4) ? "dayLabel mono axis axis-workweek": "dayLabel mono axis"); });
+	// var dayLabels = svg.selectAll(".dayLabel")
+	// 	.data(days)
+	// 	.enter().append("text")
+	// 	.text(function (d) {return d; })
+	// 	.attr("y", function (d, i){ return i*gridSize;})
+	// 	.style("text-anchor", "end")
+	// 	.attr("transform", "translate(-6," + gridSize/1.5+")")
+	// 	.attr("class", function(d, i) { return ((i>=0 && i<=4) ? "dayLabel mono axis axis-workweek": "dayLabel mono axis"); });
 		
-	var timeLabels = svg.selectAll(".timeLabel")
-		.data(times)
-		.enter().append("text")
-		.text(function(d){return d;})
-		.attr("x", function(d,i) {return i * gridSize;})
-		.attr("y",0)
-		.style("text-anchor", "middle")
-		.attr("transform", "translate(" + gridSize/2+", -6)")
-		.attr("class", function(d, i) { return ((i>=9 && i<= 17) ? "timeLabel mono axis axis-worktime": "timeLabel mono axis"); });
+	// var timeLabels = svg.selectAll(".timeLabel")
+	// 	.data(times)
+	// 	.enter().append("text")
+	// 	.text(function(d){return d;})
+	// 	.attr("x", function(d,i) {return i * gridSize;})
+	// 	.attr("y",0)
+	// 	.style("text-anchor", "middle")
+	// 	.attr("transform", "translate(" + gridSize/2+", -6)")
+	// 	.attr("class", function(d, i) { return ((i>=9 && i<= 17) ? "timeLabel mono axis axis-worktime": "timeLabel mono axis"); });
 		
 	var heatMap = svg.selectAll(".hour")
 		.data(dataset)
@@ -65,25 +65,7 @@ gridSize = Math.floor(width / times.length);
 	heatMap.transition().duration(1000)
 		.style("fill", function(d){ return colorScale(d.value);});
 		
-	heatMap.append("title").text(function(d) {return d.value;});
-	
-	// var legend = svg.selectAll(".legend")
-	// 	.data([0].concat(colorScale.quantiles()), function(d) {return d;})
-	// 	.enter().append("g")
-	// 	.attr("class", "legend");
-	
-	// legend.append("rect")
-	// 	.attr("x", function(d, i){ return legendElementWidth * i;})
-	// 	.attr("y", height)
-	// 	.attr("width", legendElementWidth)
-	// 	.attr("height", gridSize/2)
-	// 	.style("fill", function(d, i) {return colors[i]; });
-	
-	// legend.append("text")
-	// 	.attr("class", "mono")
-	// 	.text(function(d) {return "≥ "+d.toString().substr(0,1);})
-	// 	.attr("x", function(d, i){ return legendElementWidth *i;})
-	// 	.attr("y", height+ gridSize);		
+	heatMap.append("title").text(function(d) {return d.key + " : " + d.value;});	
 
 function tabulate(data, columns, selectedKey, selectedValue,context) {   
   d3.select('#table_data').html('');
