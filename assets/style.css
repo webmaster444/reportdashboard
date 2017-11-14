@@ -103,3 +103,7 @@ h3{
   stroke: lightgrey;
   stroke-width: 10px;
 }
+
+#table_data table{
+  margin: 0 auto;
+}

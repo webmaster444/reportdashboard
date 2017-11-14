@@ -22,9 +22,24 @@ $(function() {
                      
     });
 
+    d3.selection.prototype.moveToFront = function() {  
+      return this.each(function(){
+        this.parentNode.appendChild(this);
+      });
+    };
+    d3.selection.prototype.moveToBack = function() {  
+        return this.each(function() { 
+            var firstChild = this.parentNode.firstChild; 
+            if (firstChild) { 
+                this.parentNode.insertBefore(this, firstChild); 
+            } 
+        });
+    };
+
     $(document).on('click', 'rect', function(){ 
         $('.clicked').removeClass('clicked');
         $(this).addClass('clicked');
+        d3.select(this).moveToFront();
     }); 
     $(document).on('click', 'path.arc_path', function(){ 
         $('.clicked').removeClass('clicked');

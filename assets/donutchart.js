@@ -72,15 +72,15 @@ function donutChart(chartWrapper, dataset,oData,selectedKey) {
         })
         .on('mouseout', function(d, i, j) {
             var thisPath = d3.select(this);
-            if (!thisPath.classed('clicked')) {
+            // if (!thisPath.classed('clicked')) {
                 pathAnim(thisPath, 0);
-            }
+            // }
             tip.hide(d);
         }).on('click', function(d, i, j) {
-            var thisPath = d3.select(this);
-            var clicked = thisPath.classed('clicked');
-            pathAnim(thisPath, ~~(!clicked));
-            thisPath.classed('clicked', !clicked);               
+            // var thisPath = d3.select(this);
+            // var clicked = thisPath.classed('clicked');
+            // pathAnim(thisPath, ~~(!clicked));
+            // thisPath.classed('clicked', !clicked);               
             tabulate(oData,['Id','Flow','Status'], selectedKey, d.data.name, svg);                            
         });
     // g.append("text")
