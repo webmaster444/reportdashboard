@@ -6,7 +6,7 @@ var margin = {top:50, right:0, bottom:100, left:30},
 		legendElementWidth=gridSize*2.665,
 		buckets = 10,
 
-		colors = ["#f7fcf0","#e0f3db","#ccebc5","#a8ddb5","#7bccc4","#4eb3d3","#2b8cbe","#0868ac","#084081"],
+		colors = ["#f7fcf0","#e0caa3","#dbbc85","#deb66f","#aa7b2a","#be882b","#2b8cbe","#da8425","#e17b18"],
 		days = [],
 		times = [];
 	
