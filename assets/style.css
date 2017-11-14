@@ -66,3 +66,22 @@ h3{
   width: 100%;
   clear: both;
 }
+
+#horizontal_bar_chart{
+  width: 100%;
+  min-height: 300px;
+}
+
+#horizontal_bar_chart .axisHorizontal path{
+        fill: none;
+}
+
+#horizontal_bar_chart .axisHorizontal .tick line {
+        stroke-width: 1;
+        stroke: rgba(0, 0, 0, 0.2);
+}
+
+#horizontal_bar_chart .bar {
+        fill: steelblue;
+        fill-opacity: .9;
+}

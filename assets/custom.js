@@ -18,7 +18,7 @@ $(function() {
         let _data = data;                       
         
         var donutData = parseData(data, 'Status');        
-        donutChart('#flow_execution_chart', donutData,_data,'Status');
+        drawHorizontalBarChart('#horizontal_bar_chart', donutData,_data,'Status');
                      
     })      
 });

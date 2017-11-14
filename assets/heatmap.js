@@ -67,23 +67,23 @@ gridSize = Math.floor(width / times.length);
 		
 	heatMap.append("title").text(function(d) {return d.value;});
 	
-	var legend = svg.selectAll(".legend")
-		.data([0].concat(colorScale.quantiles()), function(d) {return d;})
-		.enter().append("g")
-		.attr("class", "legend");
+	// var legend = svg.selectAll(".legend")
+	// 	.data([0].concat(colorScale.quantiles()), function(d) {return d;})
+	// 	.enter().append("g")
+	// 	.attr("class", "legend");
 	
-	legend.append("rect")
-		.attr("x", function(d, i){ return legendElementWidth * i;})
-		.attr("y", height)
-		.attr("width", legendElementWidth)
-		.attr("height", gridSize/2)
-		.style("fill", function(d, i) {return colors[i]; });
+	// legend.append("rect")
+	// 	.attr("x", function(d, i){ return legendElementWidth * i;})
+	// 	.attr("y", height)
+	// 	.attr("width", legendElementWidth)
+	// 	.attr("height", gridSize/2)
+	// 	.style("fill", function(d, i) {return colors[i]; });
 	
-	legend.append("text")
-		.attr("class", "mono")
-		.text(function(d) {return "≥ "+d.toString().substr(0,1);})
-		.attr("x", function(d, i){ return legendElementWidth *i;})
-		.attr("y", height+ gridSize);		
+	// legend.append("text")
+	// 	.attr("class", "mono")
+	// 	.text(function(d) {return "≥ "+d.toString().substr(0,1);})
+	// 	.attr("x", function(d, i){ return legendElementWidth *i;})
+	// 	.attr("y", height+ gridSize);		
 
 function tabulate(data, columns, selectedKey, selectedValue,context) {   
   d3.select('#table_data').html('');

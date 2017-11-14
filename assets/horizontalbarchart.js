@@ -1,25 +1,24 @@
- function drawHorizontalBarChart(chartWrapper, dataset,oData,selectedKey){
- var div = d3.select("body").append("div").attr("class", "toolTip");
-
+ function drawHorizontalBarChart(chartWrapper, dataset,oData,selectedKey){    
     var axisMargin = 20,
             margin = 40,
             valueMargin = 4,
-            width = parseInt(d3.select('body').style('width'), 10),
-            height = parseInt(d3.select('body').style('height'), 10),
-            barHeight = (height-axisMargin-margin*2)* 0.4/data.length,
-            barPadding = (height-axisMargin-margin*2)*0.6/data.length,
-            data, bar, svg, scale, xAxis, labelWidth = 0;
+            width = parseInt(d3.select(chartWrapper).style('width'), 10),
+            height = parseInt(d3.select(chartWrapper).style('height'), 10),
+            barHeight = (height-axisMargin-margin*2)* 0.4/dataset.length,
+            barPadding = (height-axisMargin-margin*2)*0.6/dataset.length,
+            bar, svg, scale, xAxis, labelWidth = 0;
 
-    max = d3.max(data, function(d) { return d.value; });
+    max = d3.max(dataset, function(d) { return d.total; });
 
-    svg = d3.select('body')
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+    svg = d3.select(chartWrapper)
+            .append("svg")            
+            .attr("width", '100%')
+            .attr("height", '100%')
+            .attr("viewBox",'0 0 '+ width + ' ' + height);
 
 
     bar = svg.selectAll("g")
-            .data(data)
+            .data(dataset)
             .enter()
             .append("g");
 
@@ -34,7 +33,7 @@
             .attr("y", barHeight / 2)
             .attr("dy", ".35em") //vertical align middle
             .text(function(d){
-                return d.label;
+                return d.name;
             }).each(function() {
         labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width));
     });
@@ -55,7 +54,7 @@
 						.transition()
 						.duration(1500)
             .attr("width", function(d){
-                return scale(d.value);
+                return scale(d.total);
             });
 
     bar.append("text")
@@ -65,23 +64,11 @@
             .attr("dy", ".35em") //vertical align middle
             .attr("text-anchor", "end")
             .text(function(d){
-                return (d.value+"%");
+                return (d.total);
             })
             .attr("x", function(d){
                 var width = this.getBBox().width;
-                return Math.max(width + valueMargin, scale(d.value));
-            });
-
-    bar
-            .on("mousemove", function(d){
-                div.style("left", d3.event.pageX+10+"px");
-                div.style("top", d3.event.pageY-25+"px");
-                div.style("display", "inline-block");
-                div.html((d.label)+"<br>"+(d.value)+"%");
-            });
-    bar
-            .on("mouseout", function(d){
-                div.style("display", "none");
+                return Math.max(width + valueMargin, scale(d.total));
             });
 
     svg.insert("g",":first-child")
