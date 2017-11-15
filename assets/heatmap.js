@@ -50,11 +50,7 @@ gridSize = Math.floor(width / times.length * tmpRows) - 2;
 		.style("fill", function(d){ return colorScale(d.value);});
 		
 	heatMap.append("title").text(function(d) {return d.key + " : " + d.value;});	
-	// svg.append('path').attr("d", drawBorder);
 
-// function drawBorder(){
-
-// }
 function tabulate(data, columns, selectedKey, selectedValue,context) {   
   d3.select('#table_data').html('');
   var table = d3.select('#table_data').append('table')
