@@ -31,26 +31,6 @@ gridSize = Math.floor(width / times.length * tmpRows) - 2;
 	var colorScale = d3.scale.quantile()
 		.domain([0, (d3.max(dataset, function(d){return d.value;})/2), d3.max(dataset, function(d){return d.value;})])
 		.range(colors);
-
-
-	// var dayLabels = svg.selectAll(".dayLabel")
-	// 	.data(days)
-	// 	.enter().append("text")
-	// 	.text(function (d) {return d; })
-	// 	.attr("y", function (d, i){ return i*gridSize;})
-	// 	.style("text-anchor", "end")
-	// 	.attr("transform", "translate(-6," + gridSize/1.5+")")
-	// 	.attr("class", function(d, i) { return ((i>=0 && i<=4) ? "dayLabel mono axis axis-workweek": "dayLabel mono axis"); });
-		
-	// var timeLabels = svg.selectAll(".timeLabel")
-	// 	.data(times)
-	// 	.enter().append("text")
-	// 	.text(function(d){return d;})
-	// 	.attr("x", function(d,i) {return i * gridSize;})
-	// 	.attr("y",0)
-	// 	.style("text-anchor", "middle")
-	// 	.attr("transform", "translate(" + gridSize/2+", -6)")
-	// 	.attr("class", function(d, i) { return ((i>=9 && i<= 17) ? "timeLabel mono axis axis-worktime": "timeLabel mono axis"); });
 		
 	var heatMap = svg.selectAll(".hour")
 		.data(dataset)
